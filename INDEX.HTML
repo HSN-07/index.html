@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hassan Designs | Premium HTML/CSS Templates</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="icon" href="images/favicon.png" type="image/x-icon">
+<link rel="icon" href="https://via.placeholder.com/50" type="image/x-icon">
 <style>
 :root {
   --primary: #2563eb;
@@ -16,8 +16,12 @@
   --gray: #64748b;
   --text-dark: #0f172a;
   --text-light: #f8fafc;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
 }
 
+/* Dark Mode Variables */
 [data-theme="dark"] {
   --primary: #1a1a2e;
   --secondary: #4ecdc4;
@@ -25,6 +29,7 @@
   --light: #1e1e1e;
   --text-dark: #f8f9fa;
   --text-light: #e9ecef;
+  --gray: #94a3b8;
 }
 
 * {
@@ -41,13 +46,13 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Header Styles */
 header {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
   padding: 2rem 0;
   text-align: center;
   position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -68,6 +73,11 @@ header {
   object-fit: cover;
   border: 4px solid white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.profile-img:hover {
+  transform: scale(1.05);
 }
 
 .badge {
@@ -80,6 +90,13 @@ header {
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 .logo {
@@ -92,10 +109,18 @@ header {
   gap: 0.5rem;
 }
 
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
 .tagline {
   font-size: 1.2rem;
   opacity: 0.9;
   margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .social-links {
@@ -108,20 +133,28 @@ header {
   color: white;
   font-size: 1.5rem;
   transition: transform 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .social-links a:hover {
   color: var(--accent);
   transform: translateY(-3px);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Navigation */
 nav {
   background-color: var(--dark);
   padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 nav ul {
@@ -129,15 +162,17 @@ nav ul {
   justify-content: center;
   list-style: none;
   gap: 2rem;
+  flex-wrap: wrap;
 }
 
 nav a {
   color: white;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: all 0.3s;
   padding: 0.5rem 1rem;
   border-radius: 4px;
+  position: relative;
 }
 
 nav a:hover {
@@ -145,7 +180,22 @@ nav a:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Main Content */
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: all 0.3s;
+  transform: translateX(-50%);
+}
+
+nav a:hover::after {
+  width: 80%;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -154,6 +204,7 @@ nav a:hover {
 
 section {
   margin-bottom: 3rem;
+  scroll-margin-top: 80px;
 }
 
 h2 {
@@ -162,19 +213,21 @@ h2 {
   font-size: 2rem;
   position: relative;
   padding-bottom: 0.5rem;
+  text-align: center;
 }
 
 h2::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 80px;
   height: 4px;
   background-color: var(--accent);
+  border-radius: 2px;
 }
 
-/* Services Section */
 .services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -188,6 +241,8 @@ h2::after {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .service-card:hover {
@@ -198,9 +253,42 @@ h2::after {
 .service-card h3 {
   color: var(--secondary);
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Portfolio Section */
+.service-card h3 i {
+  color: var(--accent);
+}
+
+.service-card p {
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+.service-features {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--gray);
+}
+
+.service-features li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.service-features li:before {
+  content: '✓';
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Portfolio Styles */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -212,55 +300,309 @@ h2::after {
   border-radius: 8px;
   overflow: hidden;
   height: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .portfolio-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s;
+  transition: transform 0.5s;
 }
 
 .portfolio-overlay {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 1.5rem;
-  transform: translateY(100%);
-  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .portfolio-item:hover .portfolio-overlay {
-  transform: translateY(0);
+  opacity: 1;
 }
 
 .portfolio-item:hover img {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
-.btn {
+.view-btn {
   display: inline-block;
+  margin-top: 1rem;
   padding: 0.5rem 1rem;
   background: var(--accent);
   color: white;
   text-decoration: none;
   border-radius: 4px;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.3s;
+  align-self: flex-start;
   border: none;
   cursor: pointer;
 }
 
-.btn:hover {
+.view-btn:hover {
   background: var(--primary);
+  transform: translateY(-2px);
 }
 
-/* Pricing Section */
+/* Project Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  overflow-y: auto;
+  animation: fadeIn 0.3s;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideDown 0.4s;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: var(--gray);
+  cursor: pointer;
+  transition: color 0.3s;
+  background: none;
+  border: none;
+}
+
+.close-btn:hover {
+  color: var(--primary);
+}
+
+.project-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.project-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.project-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.project-description {
+  grid-column: 1 / -1;
+}
+
+.project-features ul {
+  list-style-type: none;
+}
+
+.project-features li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.project-features li:before {
+  content: '✓';
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+}
+
+.project-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.project-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.primary-btn {
+  background-color: var(--primary);
+  color: white;
+  border: 2px solid var(--primary);
+}
+
+.primary-btn:hover {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.secondary-btn:hover {
+  background-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Payment Processing Modal */
+.payment-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  animation: slideDown 0.4s;
+}
+
+.payment-spinner {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  animation: spin 1s linear infinite;
+}
+
+.payment-success {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--success);
+}
+
+.payment-error {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--error);
+}
+
+.payment-details {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* Testimonial Styles */
+.testimonials {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scrollbar-width: thin;
+  scroll-snap-type: x mandatory;
+}
+
+.testimonial-card {
+  min-width: 300px;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 4rem;
+  color: var(--accent);
+  opacity: 0.2;
+  font-family: serif;
+  line-height: 1;
+}
+
+.quote {
+  font-style: italic;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.client-info {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.client-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.client-rating {
+  color: var(--warning);
+  margin-top: 0.5rem;
+}
+
+/* Pricing Styles */
 .pricing-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
@@ -270,11 +612,28 @@ h2::after {
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .pricing-card:hover {
   transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card.popular::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--accent);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-bottom-left-radius: 8px;
 }
 
 .price {
@@ -282,11 +641,15 @@ h2::after {
   font-weight: bold;
   margin: 1rem 0;
   color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .price span {
   font-size: 1rem;
   color: var(--gray);
+  margin-top: 0.5rem;
 }
 
 .pricing-card ul {
@@ -296,9 +659,10 @@ h2::after {
 }
 
 .pricing-card li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
   position: relative;
-  padding-left: 1.5rem;
+  padding-left: 1.8rem;
+  font-size: 0.95rem;
 }
 
 .pricing-card li:before {
@@ -306,34 +670,256 @@ h2::after {
   color: var(--accent);
   position: absolute;
   left: 0;
+  font-weight: bold;
 }
 
-/* Testimonials */
-.testimonials {
+.pricing-card .btn {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
   display: flex;
-  gap: 2rem;
-  overflow-x: auto;
-  padding: 1rem 0;
-  scrollbar-width: thin;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.testimonial-card {
-  min-width: 300px;
+.pricing-card .btn:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.pricing-card .btn i {
+  font-size: 1.2rem;
+}
+
+/* Skills Styles */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.skill-item {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.skill-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.skill-item i {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.skill-item p {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Newsletter Styles */
+.newsletter-container {
+  text-align: center;
+  padding: 3rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-form {
+  display: flex;
+  max-width: 500px;
+  margin: 1rem auto 0;
+  background: white;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  font-size: 1rem;
+}
+
+.newsletter-form input:focus {
+  outline: none;
+}
+
+.newsletter-form button {
+  padding: 0 1.8rem;
+  background: var(--dark);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.newsletter-form button:hover {
+  background: var(--secondary);
+}
+
+/* Stats Section */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.stat-item {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* Contact Styles */
+.contact-info {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.contact-info p {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-info i {
+  color: var(--accent);
+  width: 20px;
+  text-align: center;
+}
+
+.contact-info a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.contact-info a:hover {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   background: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.client-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 1rem;
-  object-fit: cover;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-/* Footer */
+form label {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+form input,
+form select,
+form textarea {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  color: var(--text-dark);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+form button {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+form button:hover {
+  background-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+form button i {
+  font-size: 1.2rem;
+}
+
 footer {
   background-color: var(--dark);
   color: white;
@@ -342,7 +928,30 @@ footer {
   margin-top: 2rem;
 }
 
-/* Dark Mode Toggle */
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
 .dark-mode-toggle {
   position: fixed;
   bottom: 20px;
@@ -358,14 +967,81 @@ footer {
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: transform 0.3s;
+  transition: transform 0.3s, background 0.3s;
+  font-weight: 600;
 }
 
 .dark-mode-toggle:hover {
   transform: scale(1.05);
+  background: var(--primary);
 }
 
-/* Responsive Design */
+.scroll-to-top {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+  transition: all 0.3s;
+}
+
+.scroll-to-top:hover {
+  background: var(--secondary);
+  transform: scale(1.1);
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--success);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.toast.error {
+  background: var(--error);
+}
+
+/* Loading Spinner */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
@@ -373,7 +1049,11 @@ footer {
     gap: 1rem;
   }
   
-  .services, .portfolio-grid, .pricing-cards {
+  .header-content {
+    flex-direction: column;
+  }
+  
+  .services, .portfolio-grid, .pricing-cards, .stats {
     grid-template-columns: 1fr;
   }
   
@@ -381,9 +1061,50 @@ footer {
     width: 120px;
     height: 120px;
   }
+  
+  .newsletter-form {
+    flex-direction: column;
+    border-radius: 4px;
+  }
+  
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+  .newsletter-form button {
+    margin-top: 0.5rem;
+    justify-content: center;
+  }
+  
+  .project-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-actions {
+    flex-direction: column;
+  }
+  
+  .project-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .modal-content {
+    padding: 1.5rem;
+  }
+  
+  .payment-methods {
+    flex-direction: column;
+  }
+  
+  .payment-btn {
+    width: 100%;
+  }
 }
 
-/* Animations */
+/* Animation classes */
 .animate-fade {
   opacity: 0;
   animation: fadeIn 1s ease-in-out forwards;
@@ -411,6 +1132,11 @@ footer {
     transform: translateY(0);
   }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 </style>
 </head>
 <body>
@@ -418,17 +1144,17 @@ footer {
   <div class="container">
     <div class="header-content">
       <div class="profile-img-container animate-fade">
-        <img src="images/profile.jpg" alt="Hassan Yagoub" class="profile-img">
+        <img src="photos/SNH.jpg" alt="Hassan Yagoub" class="profile-img">
         <div class="badge">PRO</div>
       </div>
       <div class="animate-fade delay-1">
         <div class="logo">
+          <img src="photos/SNH.jpg" alt="Hassan Designs Logo" class="logo-img">
           Hassan Designs
         </div>
-        <div class="tagline">Premium HTML/CSS Templates & Themes</div>
+        <div class="tagline">Premium HTML/CSS Templates & Themes for Modern Businesses</div>
         <div class="social-links">
-          <a href="https://snapchat.com/in/hy07my" aria-label="Snapchat" target="_blank"><i class="fab fa-snapchat"></i></a>
-          <a href="https://instagram.com/hsn07n" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://Instagram.com/hsn07n" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
           <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
           <a href="#" aria-label="Codepen"><i class="fab fa-codepen"></i></a>
         </div>
@@ -439,11 +1165,11 @@ footer {
 
 <nav>
   <ul>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#services"><i class="fas fa-laptop-code"></i> Services</a></li>
+    <li><a href="#portfolio"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+    <li><a href="#pricing"><i class="fas fa-tags"></i> Pricing</a></li>
+    <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+    <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
   </ul>
 </nav>
 
@@ -452,54 +1178,209 @@ footer {
     <h2>Our Services</h2>
     <div class="services">
       <div class="service-card animate-fade delay-1">
-        <h3>HTML Templates</h3>
-        <p>Responsive, modern HTML templates for any business need. Fully customizable and SEO-friendly.</p>
+        <h3><i class="fas fa-code"></i> HTML Templates</h3>
+        <p>Responsive, modern HTML templates for any business need. Fully customizable and SEO-friendly with clean, semantic code.</p>
+        <ul class="service-features">
+          <li>Mobile-first responsive design</li>
+          <li>Cross-browser compatibility</li>
+          <li>SEO optimized structure</li>
+          <li>Easy-to-customize components</li>
+        </ul>
       </div>
       <div class="service-card animate-fade delay-2">
-        <h3>CSS Themes</h3>
-        <p>Beautiful CSS themes that can transform any website with minimal integration effort.</p>
+        <h3><i class="fab fa-css3-alt"></i> CSS Themes</h3>
+        <p>Beautiful CSS themes that can transform any website with minimal integration effort and consistent styling.</p>
+        <ul class="service-features">
+          <li>Flexible color schemes</li>
+          <li>CSS variables for easy theming</li>
+          <li>Modern animations & transitions</li>
+          <li>Detailed documentation</li>
+        </ul>
       </div>
       <div class="service-card animate-fade delay-3">
-        <h3>UI/UX Design</h3>
-        <p>Custom user interface and experience design tailored to your brand and audience.</p>
+        <h3><i class="fas fa-pencil-ruler"></i> UI/UX Design</h3>
+        <p>Custom user interface and experience design tailored to your brand and audience with a focus on usability.</p>
+        <ul class="service-features">
+          <li>User-centered design approach</li>
+          <li>Wireframing & prototyping</li>
+          <li>Accessibility compliance</li>
+          <li>Design system creation</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <section id="portfolio">
-    <h2>Our Work</h2>
+    <h2>My Work</h2>
     <div class="portfolio-grid">
       <div class="portfolio-item animate-fade">
-        <img src="images/business-template.jpg" alt="Modern Business Template">
+        <img src="photos/Modern Business Template.jpg" alt="Modern Business Template">
         <div class="portfolio-overlay">
           <h3>Modern Business Template</h3>
-          <a href="law-platform.html" class="btn" target="_blank">View Project</a>
+          <p>A sleek, professional template for corporate websites</p>
+          <button class="view-btn" data-modal="modern-business">View Details</button>
         </div>
       </div>
       <div class="portfolio-item animate-fade delay-1">
-        <img src="images/ecommerce-theme.jpg" alt="E-commerce Theme">
+        <img src="photos/NFL1.jpg" alt="E-commerce Theme">
         <div class="portfolio-overlay">
           <h3>E-commerce Theme</h3>
-          <a href="code.html" class="btn" target="_blank">View Project</a>
+          <p>Complete shopping solution with product pages and cart</p>
+          <button class="view-btn" data-modal="ecommerce-theme">View Details</button>
         </div>
       </div>
       <div class="portfolio-item animate-fade delay-2">
-        <img src="images/portfolio-template.jpg" alt="Portfolio Template">
+        <img src="photos/Portfolio Template.avif" alt="Portfolio Template">
         <div class="portfolio-overlay">
           <h3>Portfolio Template</h3>
-          <a href="cybersecurity.html" class="btn" target="_blank">View Project</a>
+          <p>Elegant showcase for creative professionals</p>
+          <button class="view-btn" data-modal="portfolio-template">View Details</button>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Project Modals -->
+  <div id="modern-business" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="project-header">
+        <h2>Modern Business Template</h2>
+        <p>A sleek, responsive template for professional businesses</p>
+      </div>
+      <img src="photos/HSN.jpg" alt="Modern Business Template" class="project-image">
+      <div class="project-details">
+        <div class="project-description">
+          <h3>Project Description</h3>
+          <p>This modern business template was designed with corporate clients in mind. It features a clean layout, responsive design, and customizable sections to showcase services, team members, and testimonials. The template includes 10+ pre-built pages and components that can be easily mixed and matched to create the perfect website for your business.</p>
+        </div>
+        <div class="project-features">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Fully responsive design (mobile, tablet, desktop)</li>
+            <li>SEO optimized structure with semantic HTML5</li>
+            <li>Easy-to-customize color scheme with CSS variables</li>
+            <li>Interactive elements with smooth animations</li>
+            <li>Fast loading performance optimized</li>
+            <li>Built with accessibility in mind (WCAG 2.1 compliant)</li>
+            <li>Modular component-based architecture</li>
+          </ul>
+        </div>
+        <div class="project-technologies">
+          <h3>Technologies Used</h3>
+          <ul>
+            <li>HTML5</li>
+            <li>CSS3 (Flexbox, Grid, Animations)</li>
+            <li>JavaScript (ES6+)</li>
+            <li>SASS for styling</li>
+          </ul>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a href="#" class="project-btn primary-btn purchase-btn" data-product="Modern Business Template" data-price="49"><i class="fas fa-shopping-cart"></i> Purchase Template ($49)</a>
+        <a href="#" class="project-btn secondary-btn"><i class="fas fa-eye"></i> View Live Demo</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="ecommerce-theme" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="project-header">
+        <h2>E-commerce Theme</h2>
+        <p>A complete shopping solution for online stores</p>
+      </div>
+      <img src="photos/NFL1.jpg" alt="E-commerce Theme" class="project-image">
+      <div class="project-details">
+        <div class="project-description">
+          <h3>Project Description</h3>
+          <p>This e-commerce theme includes all the essential pages for an online store - product listings, detailed product pages, shopping cart, and checkout process. The design is optimized for conversions with a focus on user experience and product presentation. The theme comes with built-in product filtering, search functionality, and responsive product grids that adapt to any screen size.</p>
+        </div>
+        <div class="project-features">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Product catalog with filtering by category, price, etc.</li>
+            <li>Responsive product grids with hover effects</li>
+            <li>Shopping cart functionality with quantity controls</li>
+            <li>Multi-step checkout process with form validation</li>
+            <li>Customer account pages (orders, profile, addresses)</li>
+            <li>Product zoom and gallery functionality</li>
+            <li>Wishlist and comparison features</li>
+          </ul>
+        </div>
+        <div class="project-technologies">
+          <h3>Technologies Used</h3>
+          <ul>
+            <li>HTML5</li>
+            <li>CSS3 (Flexbox, Grid)</li>
+            <li>JavaScript (ES6+)</li>
+            <li>jQuery for interactive elements</li>
+          </ul>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a href="#" class="project-btn primary-btn purchase-btn" data-product="E-commerce Theme" data-price="89"><i class="fas fa-shopping-cart"></i> Purchase Theme ($89)</a>
+        <a href="#" class="project-btn secondary-btn"><i class="fas fa-eye"></i> View Live Demo</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="portfolio-template" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="project-header">
+        <h2>Portfolio Template</h2>
+        <p>Showcase your work in style</p>
+      </div>
+      <img src="photos/Portfolio Template.avif" alt="Portfolio Template" class="project-image">
+      <div class="project-details">
+        <div class="project-description">
+          <h3>Project Description</h3>
+          <p>This portfolio template is perfect for creatives, designers, and photographers. It features a masonry grid layout, project filtering, and elegant project detail pages to showcase your work effectively. The template includes multiple portfolio layout options, a blog section, and customizable contact form. The minimalist design puts the focus on your work while providing all the functionality you need.</p>
+        </div>
+        <div class="project-features">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Masonry grid layout with animated filtering</li>
+            <li>Project filtering by category or tag</li>
+            <li>Responsive image gallery with lightbox</li>
+            <li>Customizable project detail pages</li>
+            <li>Contact form with validation</li>
+            <li>Blog section with multiple post layouts</li>
+            <li>Dark/light mode toggle</li>
+          </ul>
+        </div>
+        <div class="project-technologies">
+          <h3>Technologies Used</h3>
+          <ul>
+            <li>HTML5</li>
+            <li>CSS3 (Grid, Animations)</li>
+            <li>JavaScript (ES6+)</li>
+            <li>Lightbox library for image viewing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="project-actions">
+        <a href="#" class="project-btn primary-btn purchase-btn" data-product="Portfolio Template" data-price="59"><i class="fas fa-shopping-cart"></i> Purchase Template ($59)</a>
+        <a href="#" class="project-btn secondary-btn"><i class="fas fa-eye"></i> View Live Demo</a>
+      </div>
+    </div>
+  </div>
+
   <section id="testimonials">
     <h2>Client Testimonials</h2>
     <div class="testimonials">
       <div class="testimonial-card animate-fade">
-        <div class="quote">"Hassan's templates transformed our online presence! The quality and attention to detail are exceptional."</div>
+        <div class="quote">"Hassan's templates transformed our online presence! The quality and attention to detail are exceptional. Our website traffic increased by 40% after implementing his design."</div>
+        <div class="client-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
         <div class="client-info">
-          <img src="images/client1.jpg" alt="Client" class="client-img">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson" class="client-img">
           <div>
             <h4>Sarah Johnson</h4>
             <p>CEO, TechSolutions</p>
@@ -507,12 +1388,36 @@ footer {
         </div>
       </div>
       <div class="testimonial-card animate-fade delay-1">
-        <div class="quote">"Working with Hassan was a pleasure. The templates were delivered on time and exceeded our expectations."</div>
+        <div class="quote">"Working with Hassan was a pleasure. The templates were delivered on time and exceeded our expectations. The documentation made implementation a breeze."</div>
+        <div class="client-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
         <div class="client-info">
-          <img src="images/client2.jpg" alt="Client" class="client-img">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Brown" class="client-img">
           <div>
             <h4>Michael Brown</h4>
             <p>Marketing Director</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card animate-fade delay-2">
+        <div class="quote">"The custom theme Hassan created for us helped increase our conversion rate by 30%. Highly recommended for anyone looking for professional web solutions!"</div>
+        <div class="client-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+        <div class="client-info">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily Davis" class="client-img">
+          <div>
+            <h4>Emily Davis</h4>
+            <p>E-commerce Manager</p>
           </div>
         </div>
       </div>
@@ -529,18 +1434,25 @@ footer {
           <li>Responsive Design</li>
           <li>Basic Customization</li>
           <li>Email Support</li>
+          <li>1 Month Updates</li>
+          <li>Standard Documentation</li>
+          <li>Single License</li>
         </ul>
-        <a href="purchase.html?plan=basic" class="btn">Get Started</a>
+        <button class="btn"><i class="fas fa-shopping-cart"></i> Get Started</button>
       </div>
-      <div class="pricing-card animate-fade delay-1">
+      <div class="pricing-card animate-fade delay-1 popular">
         <h3>Standard</h3>
         <div class="price">$89<span>/template</span></div>
         <ul>
           <li>All Basic Features</li>
           <li>Advanced Customization</li>
           <li>Priority Support</li>
+          <li>3 Months Updates</li>
+          <li>SEO Optimization</li>
+          <li>Video Tutorials</li>
+          <li>Multi-site License</li>
         </ul>
-        <a href="purchase.html?plan=standard" class="btn">Get Started</a>
+        <button class="btn"><i class="fas fa-shopping-cart"></i> Get Started</button>
       </div>
       <div class="pricing-card animate-fade delay-2">
         <h3>Premium</h3>
@@ -549,8 +1461,65 @@ footer {
           <li>All Standard Features</li>
           <li>Full Custom Development</li>
           <li>24/7 Support</li>
+          <li>6 Months Updates</li>
+          <li>Performance Optimization</li>
+          <li>Lifetime License</li>
+          <li>White-label Rights</li>
+          <li>Dedicated Account Manager</li>
         </ul>
-        <a href="purchase.html?plan=premium" class="btn">Get Started</a>
+        <button class="btn"><i class="fas fa-shopping-cart"></i> Get Started</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Technologies We Use</h2>
+    <div class="skills-grid">
+      <div class="skill-item animate-fade">
+        <i class="fab fa-html5"></i>
+        <p>HTML5</p>
+      </div>
+      <div class="skill-item animate-fade delay-1">
+        <i class="fab fa-css3-alt"></i>
+        <p>CSS3</p>
+      </div>
+      <div class="skill-item animate-fade delay-2">
+        <i class="fab fa-js"></i>
+        <p>JavaScript</p>
+      </div>
+      <div class="skill-item animate-fade delay-1">
+        <i class="fab fa-sass"></i>
+        <p>SASS</p>
+      </div>
+      <div class="skill-item animate-fade delay-2">
+        <i class="fab fa-bootstrap"></i>
+        <p>Bootstrap</p>
+      </div>
+      <div class="skill-item animate-fade delay-3">
+        <i class="fab fa-git-alt"></i>
+        <p>Git</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="stats">
+    <h2>By The Numbers</h2>
+    <div class="stats">
+      <div class="stat-item animate-fade">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Templates Created</div>
+      </div>
+      <div class="stat-item animate-fade delay-1">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div class="stat-item animate-fade delay-2">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-item animate-fade delay-3">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Years Experience</div>
       </div>
     </div>
   </section>
@@ -558,38 +1527,97 @@ footer {
   <section id="about">
     <h2>About Us</h2>
     <p>Hassan Designs specializes in creating high-quality HTML/CSS templates and themes for businesses and individuals. With a focus on clean code, modern design, and responsiveness, we help our clients establish a strong online presence.</p>
+    <p>Founded by Hassan Yagoub, our company is dedicated to providing affordable web solutions without compromising on quality. We believe in creating products that are not only visually appealing but also perform exceptionally well across all devices.</p>
+    <p>Our approach combines aesthetic design with technical excellence. Each template is meticulously crafted to ensure it meets the highest standards of web development while remaining easy to customize for our clients' specific needs.</p>
+    <p>Whether you're a small business owner, a creative professional, or a developer looking for a solid foundation, our templates provide the perfect starting point for your web project.</p>
+  </section>
+
+  <section id="newsletter">
+    <div class="newsletter-container animate-fade">
+      <h3>Subscribe to Our Newsletter</h3>
+      <p>Get updates on new templates, special offers, and web design tips delivered to your inbox</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+      </form>
+    </div>
   </section>
 
   <section id="contact">
     <h2>Contact Information</h2>
     <div class="contact-info">
-      <p><strong>Owner:</strong> Hassan Yagoub</p>
-      <p><strong>Email:</strong> <a href="mailto:hy07my@gmail.com">hy07my@gmail.com</a></p>
-      <p><strong>Location:</strong> Glasgow City, UK</p>
+      <p><i class="fas fa-user"></i> <strong>Owner:</strong> Hassan Yagoub</p>
+      <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:hy07my@gmail.com">hy07my@gmail.com</a></p>
+      <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Glasgow City, UK</p>
+      <p><i class="fas fa-clock"></i> <strong>Hours:</strong> Tue-Fri, 9am-5pm GMT</p>
+      <p><i class="fas fa-laptop-code"></i> <strong>Services:</strong> Custom HTML/CSS templates, website themes</p>
     </div>
     
-    <form action="https://formsubmit.co/hy07my@gmail.com" method="POST" class="service-card">
-      <input type="hidden" name="_subject" value="New message from Hassan Designs">
-      <div class="mb-3">
-        <input type="text" name="name" placeholder="Your Name" required>
-      </div>
-      <div class="mb-3">
-        <input type="email" name="email" placeholder="Your Email" required>
-      </div>
-      <div class="mb-3">
-        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      </div>
-      <button type="submit" class="btn">Send Message</button>
-    </form>
+    <div class="text-center mb-4">
+      <h3 class="fw-bold">Get In Touch</h3>
+      <p class="text-muted">Reach out for a consultation or custom project</p>
+    </div>
+    <div class="service-card">
+      <form action="https://formsubmit.co/hy07my@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New message from Hassan Designs">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+        
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="Your Email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="service">Service Interested In</label>
+          <select id="service" name="service" required>
+            <option value="">Select Service</option>
+            <option>Website Template</option>
+            <option>Theme Design</option>
+            <option>Custom Development</option>
+            <option>Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+        </div>
+        
+        <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </form>
+    </div>
   </section>
 </main>
 
 <footer>
   <div class="container">
-    <p>&copy; 2025 Hassan Designs. All rights reserved.</p>
-    <div class="social-links" style="justify-content: center; margin-top: 1rem;">
-      <a href="https://instagram.com/hsn07n" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+    <div class="footer-content">
+      <div class="logo">
+        <img src="photos/SNH.jpg" alt="Hassan Designs Logo" class="logo-img">
+        Hassan Designs
+      </div>
+      <p>Premium HTML/CSS Templates & Themes</p>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="social-links">
+        <a href="https://Instagram.com/hsn07n" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+        <a href="#" aria-label="Codepen"><i class="fab fa-codepen"></i></a>
+      </div>
+      <p>&copy; 2025 Hassan Designs. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -598,12 +1626,37 @@ footer {
   <i class="fas fa-moon"></i> Dark Mode
 </button>
 
+<button class="scroll-to-top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<div id="toast" class="toast"></div>
+
+<!-- Payment Processing Modal -->
+<div id="payment-processing" class="payment-modal">
+  <div class="payment-modal-content">
+    <div id="payment-spinner" class="payment-spinner">
+      <i class="fas fa-circle-notch"></i>
+    </div>
+    <div id="payment-success" class="payment-success">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div id="payment-error" class="payment-error">
+      <i class="fas fa-times-circle"></i>
+    </div>
+    <h3 id="payment-message">Processing Payment</h3>
+    <p id="payment-details"></p>
+    <button id="payment-close-btn" class="btn primary-btn">Close</button>
+  </div>
+</div>
+
 <script>
   // Dark Mode Toggle
   const darkModeToggle = document.getElementById('darkModeToggle');
   const body = document.body;
   const icon = darkModeToggle.querySelector('i');
   
+  // Check for saved user preference or use system preference
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const currentTheme = localStorage.getItem('theme');
   
@@ -628,13 +1681,103 @@ footer {
     }
   });
   
-  // Smooth scrolling
+  // Smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
       document.querySelector(this.getAttribute('href')).scrollIntoView({
         behavior: 'smooth'
       });
+    });
+  });
+  
+  // Scroll to top button
+  const scrollToTopBtn = document.querySelector('.scroll-to-top');
+  
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.style.display = 'flex';
+    } else {
+      scrollToTopBtn.style.display = 'none';
+    }
+  });
+  
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+  // Newsletter form handling
+  const newsletterForm = document.querySelector('.newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = this.querySelector('input').value;
+      const toast = document.getElementById('toast');
+      
+      // Show loading state
+      const submitBtn = this.querySelector('button');
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="spinner"></span> Subscribing...';
+      submitBtn.disabled = true;
+      
+      // Simulate API call
+      setTimeout(() => {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        
+        toast.textContent = 'Thank you for subscribing! You will receive our newsletter at ' + email;
+        toast.classList.add('show');
+        
+        // Hide toast after 5 seconds
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 5000);
+        
+        this.reset();
+      }, 1500);
+    });
+  }
+  
+  // Modal functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all view buttons
+    const viewButtons = document.querySelectorAll('.view-btn');
+    
+    // Get all modal close buttons
+    const closeButtons = document.querySelectorAll('.close-btn');
+    
+    // Add click event to view buttons
+    viewButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const modalId = this.getAttribute('data-modal');
+        const modal = document.getElementById(modalId);
+        
+        // Show the modal
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    
+    // Add click event to close buttons
+    closeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const modal = this.closest('.modal');
+        
+        // Hide the modal
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
     });
   });
   
@@ -654,6 +1797,112 @@ footer {
   
   window.addEventListener('scroll', animateOnScroll);
   window.addEventListener('load', animateOnScroll);
+  
+  // Payment Processing
+  const paymentModal = document.getElementById('payment-processing');
+  const paymentSpinner = document.getElementById('payment-spinner');
+  const paymentSuccess = document.getElementById('payment-success');
+  const paymentError = document.getElementById('payment-error');
+  const paymentMessage = document.getElementById('payment-message');
+  const paymentDetails = document.getElementById('payment-details');
+  const paymentCloseBtn = document.getElementById('payment-close-btn');
+
+  function processPayment(product, price, method) {
+    paymentModal.style.display = 'flex';
+    paymentSpinner.style.display = 'block';
+    paymentSuccess.style.display = 'none';
+    paymentError.style.display = 'none';
+    paymentMessage.textContent = 'Processing Payment...';
+    paymentDetails.textContent = `${product} - $${price} via ${method}`;
+    paymentCloseBtn.style.display = 'none';
+    
+    // Simulate payment processing (in a real app, this would call your payment API)
+    setTimeout(() => {
+      // 90% chance of success for demo purposes
+      const isSuccess = Math.random() < 0.9;
+      
+      if (isSuccess) {
+        paymentSpinner.style.display = 'none';
+        paymentSuccess.style.display = 'block';
+        paymentMessage.textContent = 'Payment Successful!';
+        
+        // In a real app, you would send this data to your server
+        const paymentData = {
+          product: product,
+          price: price,
+          method: method,
+          date: new Date().toISOString(),
+          email: 'hy07my@gmail.com' // Your email to receive notifications
+        };
+        
+        console.log('Payment data to send to server:', paymentData);
+        
+        // Here you would typically send this to your backend
+        // fetch('/api/payments', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(paymentData)
+        // });
+        
+      } else {
+        paymentSpinner.style.display = 'none';
+        paymentError.style.display = 'block';
+        paymentMessage.textContent = 'Payment Failed';
+        paymentDetails.textContent += ' - Please try another payment method';
+      }
+      
+      paymentCloseBtn.style.display = 'block';
+    }, 2000);
+  }
+  
+  paymentCloseBtn.addEventListener('click', function() {
+    paymentModal.style.display = 'none';
+    // Close any open project popups
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.style.display = 'none';
+    });
+    document.body.style.overflow = 'auto';
+  });
+
+  // Handle purchase buttons
+  const purchaseBtns = document.querySelectorAll('.purchase-btn, .pricing-card .btn');
+  
+  purchaseBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const product = this.getAttribute('data-product') || this.closest('.pricing-card').querySelector('h3').textContent;
+      const price = this.getAttribute('data-price') || this.closest('.pricing-card').querySelector('.price').textContent.replace(/\D/g,'');
+      
+      // For demo, we'll just simulate Apple Pay
+      processPayment(product, price, 'Online Payment');
+    });
+  });
+
+  // Contact form handling
+  const contactForm = document.querySelector('#contact form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      // In a real implementation, this would be handled by FormSubmit
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="spinner"></span> Sending...';
+      submitBtn.disabled = true;
+      
+      // Simulate form submission
+      setTimeout(() => {
+        const toast = document.getElementById('toast');
+        toast.textContent = 'Your message has been sent successfully!';
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 5000);
+        
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+      }, 1500);
+    });
+  }
 </script>
 </body>
 </html>
